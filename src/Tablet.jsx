@@ -1,6 +1,20 @@
 /** Button that attempts to use the token in context when clicked */
+
+import { useAuth } from "./AuthContext";
+
 export default function Tablet() {
-  // TODO: call authenticate when form is submitted
+  // TODO: call signup when form is submitted
+  const { authenticate } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await authenticate();
+    if (result && result.success) {
+      console.log("authenticate completed successfully");
+    } else {
+      console.error("authentication failed:", result.message);
+    }
+  };
 
   return (
     <section>
@@ -17,7 +31,7 @@ export default function Tablet() {
         It holds out a rectangular stone tablet carved with an intricate design.
       </p>
       <form>
-        <button>Place your palm upon the tablet.</button>
+        <button onClick={handleSubmit}>Place your palm upon the tablet.</button>
       </form>
     </section>
   );
